@@ -2,14 +2,16 @@ import "./App.css";
 import React, { useEffect } from "react";
 import sampleData from "./sample_data.json";
 import { useSelector, useDispatch } from "react-redux";
-import { addInitMarkers, getMarkers } from "./state/markersSlice";
+import {
+  addInitMarkers,
+  getMarkers,
+  updateMarkers,
+} from "./state/markersSlice";
 import MapWrapper from "./Map";
 function App() {
   const markers = useSelector(getMarkers);
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
+  const handleLoadSampleMarkers = () => {
     const sampleMarkers = sampleData.markers.map((marker) => {
       return {
         position: [marker.x * 1016, marker.y * 1590],
@@ -17,12 +19,16 @@ function App() {
         id: marker.id,
       };
     });
-    console.log(markers.markers.length, "length");
-    if (markers.markers.length === 0) dispatch(addInitMarkers(sampleMarkers));
-  }, []);
-  console.log({ markers });
+
+    const finalData = sampleMarkers.concat(markers.markers);
+    dispatch(updateMarkers(finalData));
+  };
+
   return (
     <div>
+      <button onClick={handleLoadSampleMarkers} id="refreshButton">
+        Load Sample Markers
+      </button>
       <MapWrapper />
     </div>
   );

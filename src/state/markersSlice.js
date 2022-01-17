@@ -12,6 +12,8 @@ export const markersSlice = createSlice({
     },
     updateMarkers: (state, action) => {
       state.markers = action.payload;
+      console.log(action.payload, "test payload");
+      console.log(state, "test state markers");
       return state;
     },
   },

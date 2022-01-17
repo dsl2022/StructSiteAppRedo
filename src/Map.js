@@ -8,23 +8,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { addInitMarkers, getMarkers } from "./state/markersSlice";
 const MapWrapper = () => {
   const [map, setMap] = useState(null);
-  const markers = useSelector(getMarkers);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (markers.markers.length === 0)
-      dispatch(addInitMarkers(sampleData.markers));
-  }, [markers]);
-  console.log("test 17", markers);
+
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   if (markers.markers.length === 0)
+  //     dispatch(addInitMarkers(sampleData.markers));
+  // }, [markers]);
+
   return (
     <MapContainer
       minZoom={0}
       whenCreated={setMap}
-      // center={center}
-      // zoom={18}
       crs={CRS.Simple}
       scrollWheelZoom={false}
     >
-      <MyMarkers map={map} markers={markers.markers} />
+      {/* {markers.markers.length > 0 && ( */}
+      <MyMarkers map={map} />
+      {/* )} */}
     </MapContainer>
   );
 };

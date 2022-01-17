@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import ShowMarkers from "./ShowMarkers";
 import L from "leaflet";
 import shortUuid from "short-uuid";
-
-const MyMarkers = ({ map, markers }) => {
-  const [marker, setMarker] = useState(markers);
+import { useSelector, useDispatch } from "react-redux";
+import { getMarkers, updateMarkers } from "../state/markersSlice";
+const MyMarkers = ({ map }) => {
+  const markers = useSelector(getMarkers);
+  const [marker, setMarker] = useState([]);
   const [legend, setLegend] = useState();
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    setMarker(markers.markers);
+  }, [markers]);
+  useEffect(() => {
+    console.log({ marker }, "user effect");
     if (!map) return;
     const legend = L.control({ position: "bottomleft" });
     const bounds = [
@@ -29,17 +35,34 @@ const MyMarkers = ({ map, markers }) => {
 
     map.on("click", (e) => {
       const { lat, lng } = e.latlng;
-      setMarker((mar) => [
-        ...mar,
-        { position: [lat, lng], rotation: 0, id: shortUuid.generate() },
-      ]);
+      setMarker((mar) => {
+        dispatch(
+          updateMarkers([
+            ...mar,
+            { position: [lat, lng], rotation: 0, id: shortUuid.generate() },
+          ])
+        );
+        return [
+          ...mar,
+          { position: [lat, lng], rotation: 0, id: shortUuid.generate() },
+        ];
+      });
 
+      //   dispatch(updateMarkers(marker));
       info.textContent = `new marker: ${e.latlng}`;
       setLegend(info);
     });
   }, [map]);
 
-  return <ShowMarkers mapContainer={map} legend={legend} markers={marker} />;
+  return marker.length > 0 && legend !== undefined ? (
+    <ShowMarkers
+      mapContainer={map}
+      legend={legend}
+      markers={marker}
+      setLegend={setLegend}
+    />
+  ) : null;
+
   //   marker.length > 0 && legend !== undefined ? (
 
   //   ) : null;
