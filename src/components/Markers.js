@@ -47,24 +47,20 @@ const MyMarkers = ({ map }) => {
           { position: [lat, lng], rotation: 0, id: shortUuid.generate() },
         ];
       });
-
-      //   dispatch(updateMarkers(marker));
       info.textContent = `new marker: ${e.latlng}`;
       setLegend(info);
     });
   }, [map]);
 
-  return marker.length > 0 && legend !== undefined ? (
+  //   return marker.length > 0 && legend !== undefined ? (
+  return (
     <ShowMarkers
       mapContainer={map}
       legend={legend}
       markers={marker}
       setLegend={setLegend}
     />
-  ) : null;
-
-  //   marker.length > 0 && legend !== undefined ? (
-
+  );
   //   ) : null;
 };
 

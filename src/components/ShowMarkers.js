@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
-import { useDispatch } from "react-redux";
-import { updateMarkers } from "../state/markersSlice";
+// import { useDispatch } from "react-redux";
+// import { updateMarkers } from "../state/markersSlice";
 const removeMarker = (index, map, legend) => {
   map.eachLayer((layer) => {
     console.log({ layer });
@@ -30,12 +30,10 @@ const createIcon = ({ rotation, height, width }) => {
 const ShowMarkers = ({ mapContainer, legend, markers, setLegend }) => {
   const height = 20,
     width = 20;
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
   console.log(markers, "test show markers34");
   return markers?.map((marker, index) => {
     const icon = createIcon({ rotation: marker.rotation, height, width });
-    //  const legend = L.control({ position: "bottomleft" });
-    // const info = L.DomUtil.create("div", "legend");
     return (
       <Marker
         icon={icon}
@@ -48,23 +46,23 @@ const ShowMarkers = ({ mapContainer, legend, markers, setLegend }) => {
             const { lat, lng } = e.target.getLatLng();
 
             console.log({ lat, lng, index, legend });
-            // console.log("test 46", marker);
+            // TODO implement update markers here.
+
             // if (legend) {
             // dispatch(updateMarkers("id"));
-            if (!legend) {
-              legend = L.control({ position: "bottomleft" });
-              const info = L.DomUtil.create("div", "legend");
-              legend.onAdd = () => {
-                info.textContent = `imported sample marketers`;
-                return info;
-              };
-              legend.addTo(mapContainer);
-              setLegend(info);
-            }
+            // if (!legend) {
+            //   legend = L.control({ position: "bottomleft" });
+            //   const info = L.DomUtil.create("div", "legend");
+            //   legend.onAdd = () => {
+            //     info.textContent = `imported sample marketers`;
+            //     return info;
+            //   };
+            //   legend.addTo(mapContainer);
+            //   setLegend(info);
+            // }
             legend.textContent = `change position: ${lat} ${lng}\n ${
               marker?.id ? marker.id : ""
             }`;
-            // }
           },
         }}
       >

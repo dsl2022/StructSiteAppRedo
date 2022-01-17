@@ -1,14 +1,11 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import sampleData from "./sample_data.json";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addInitMarkers,
-  getMarkers,
-  updateMarkers,
-} from "./state/markersSlice";
+import { getMarkers, updateMarkers } from "./state/markersSlice";
 import MapWrapper from "./Map";
 function App() {
+  const [sampleLoaded, setSampleLoaded] = useState(false);
   const markers = useSelector(getMarkers);
   const dispatch = useDispatch();
   const handleLoadSampleMarkers = () => {
@@ -22,11 +19,16 @@ function App() {
 
     const finalData = sampleMarkers.concat(markers.markers);
     dispatch(updateMarkers(finalData));
+    setSampleLoaded(true);
   };
 
   return (
     <div>
-      <button onClick={handleLoadSampleMarkers} id="refreshButton">
+      <button
+        disabled={sampleLoaded}
+        onClick={handleLoadSampleMarkers}
+        id="refreshButton"
+      >
         Load Sample Markers
       </button>
       <MapWrapper />
