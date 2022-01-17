@@ -12,21 +12,27 @@ const removeMarker = (index, map, legend) => {
   });
 };
 
-const ShowMarkers = ({ mapContainer, legend, markers }) => {
-  const height = 20,
-    width = 20,
-    rotatedValue = 60;
-  const icon = L.divIcon({
+const createIcon = ({ rotation, height, width }) => {
+  return L.divIcon({
     iconSize: [20, 20],
     iconAnchor: [10, 10],
     className: "yourClassName",
     html: `<img 
-    style="transform: rotate(${rotatedValue}deg);"
+    style="transform: rotate(${rotation}deg);"
     height="${height}" 
     width="${width}" 
     src='https://app.structionsite.com/assets/marker_flat.png'>`,
   });
+};
+
+const ShowMarkers = ({ mapContainer, legend, markers }) => {
+  const height = 20,
+    width = 20,
+    rotatedValue = 60;
+
+  console.log(markers, "test 29 inside show markers");
   return markers.map((marker, index) => {
+    const icon = createIcon({ rotation: marker.rotation, height, width });
     return (
       <Marker
         icon={icon}

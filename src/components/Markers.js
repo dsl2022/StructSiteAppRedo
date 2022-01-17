@@ -2,18 +2,11 @@ import React, { useState, useEffect } from "react";
 import ShowMarkers from "./ShowMarkers";
 import L from "leaflet";
 import shortUuid from "short-uuid";
-import sampleData from "../sample_data.json";
-import { useSelector, useDispatch } from "react-redux";
-import { addInitMarkers, getMarkers } from "../state/markersSlice";
-const MyMarkers = ({ map }) => {
-  const [marker, setMarker] = useState([]);
+
+const MyMarkers = ({ map, markers }) => {
+  const [marker, setMarker] = useState(markers);
   const [legend, setLegend] = useState();
-  const markers = useSelector(getMarkers);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (markers.markers.length === 0)
-      dispatch(addInitMarkers(sampleData.markers));
-  });
+
   useEffect(() => {
     if (!map) return;
     const legend = L.control({ position: "bottomleft" });
@@ -45,10 +38,11 @@ const MyMarkers = ({ map }) => {
       setLegend(info);
     });
   }, [map]);
-  console.log("test 44", { marker });
-  return marker.length > 0 && legend !== undefined ? (
-    <ShowMarkers mapContainer={map} legend={legend} markers={marker} />
-  ) : null;
+
+  return <ShowMarkers mapContainer={map} legend={legend} markers={marker} />;
+  //   marker.length > 0 && legend !== undefined ? (
+
+  //   ) : null;
 };
 
 export default MyMarkers;

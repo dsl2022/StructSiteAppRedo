@@ -6,20 +6,21 @@ import { addInitMarkers, getMarkers } from "./state/markersSlice";
 import MapWrapper from "./Map";
 function App() {
   const markers = useSelector(getMarkers);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (markers.markers.length === 0)
-      dispatch(addInitMarkers(sampleData.markers));
-  });
+    const sampleMarkers = sampleData.markers.map((marker) => {
+      return {
+        position: [marker.x * 1016, marker.y * 1590],
+        rotation: marker.rotation,
+        id: marker.id,
+      };
+    });
+    console.log(markers.markers.length, "length");
+    if (markers.markers.length === 0) dispatch(addInitMarkers(sampleMarkers));
+  }, []);
   console.log({ markers });
-  const sampleMarkers = markers.markers.map((marker) => {
-    return {
-      position: [marker.x * 1016, marker.y * 1590],
-      rotation: 0,
-      id: marker.id,
-    };
-  });
-  console.log({ sampleMarkers });
   return (
     <div>
       <MapWrapper />

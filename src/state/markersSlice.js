@@ -17,7 +17,8 @@ export const markersSlice = createSlice({
   },
 });
 
-export const { addInitMarkers, updateMarkers } = markersSlice.actions;
+export const { addInitMarkers, addInitProcessedMarkers, updateMarkers } =
+  markersSlice.actions;
 export const getMarkers = (state) => state.markers;
 
 export default markersSlice.reducer;
