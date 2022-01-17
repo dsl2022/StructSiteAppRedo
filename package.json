@@ -1,5 +1,5 @@
 {
-  "name": "react-leaflet-examples",
+  "name": "leaflet-demo-app",
   "version": "0.1.4",
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "react-scripts": "4.0.3",
     "react-tabs": "^3.2.3",
     "sass": "^1.35.1",
+    "short-uuid": "^4.2.0",
     "styled-components": "^5.3.0",
     "web-vitals": "^1.0.1"
   },
@@ -41,6 +42,5 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ],
-  "homepage": "https://tomik23.github.io/react-leaflet-examples/"
+  ]
 }
