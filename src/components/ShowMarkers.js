@@ -1,10 +1,11 @@
 import L from "leaflet";
+import { useDispatch } from "react-redux";
+import { updateMarkers } from "../state/markersSlice";
 import { Marker, Popup } from "react-leaflet";
-// import { useDispatch } from "react-redux";
-// import { updateMarkers } from "../state/markersSlice";
+import { updateMarkerById } from "./helpers";
+
 const removeMarker = (index, map, legend) => {
   map.eachLayer((layer) => {
-    console.log({ layer });
     if (layer.options && layer.options.pane === "markerPane") {
       if (layer.options.uniceid === index) {
         map.removeLayer(layer);
@@ -30,8 +31,7 @@ const createIcon = ({ rotation, height, width }) => {
 const ShowMarkers = ({ mapContainer, legend, markers, setLegend }) => {
   const height = 20,
     width = 20;
-  //   const dispatch = useDispatch();
-  console.log(markers, "test show markers34");
+  const dispatch = useDispatch();
   return markers?.map((marker, index) => {
     const icon = createIcon({ rotation: marker.rotation, height, width });
     return (
@@ -44,22 +44,18 @@ const ShowMarkers = ({ mapContainer, legend, markers, setLegend }) => {
         eventHandlers={{
           moveend(e) {
             const { lat, lng } = e.target.getLatLng();
+            // this is a mocking the behavior when markers are
+            // moved and should be updated to redux. In production
+            // context, this should be updated to db.
+            const updatedmarkers = updateMarkerById({
+              markers,
+              lat,
+              lng,
+              id: marker.id,
+            });
+            // dispatch updated marker array to redux
+            dispatch(updateMarkers(updatedmarkers));
 
-            console.log({ lat, lng, index, legend });
-            // TODO implement update markers here.
-
-            // if (legend) {
-            // dispatch(updateMarkers("id"));
-            // if (!legend) {
-            //   legend = L.control({ position: "bottomleft" });
-            //   const info = L.DomUtil.create("div", "legend");
-            //   legend.onAdd = () => {
-            //     info.textContent = `imported sample marketers`;
-            //     return info;
-            //   };
-            //   legend.addTo(mapContainer);
-            //   setLegend(info);
-            // }
             legend.textContent = `change position: ${lat} ${lng}\n ${
               marker?.id ? marker.id : ""
             }`;

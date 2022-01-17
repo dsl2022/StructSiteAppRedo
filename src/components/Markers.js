@@ -13,7 +13,6 @@ const MyMarkers = ({ map }) => {
     setMarker(markers.markers);
   }, [markers]);
   useEffect(() => {
-    console.log({ marker }, "user effect");
     if (!map) return;
     const legend = L.control({ position: "bottomleft" });
     const bounds = [
@@ -32,7 +31,9 @@ const MyMarkers = ({ map }) => {
     };
 
     legend.addTo(map);
-
+    // initial first message to enable rendering of ShowMarker
+    info.textContent = `welcome!`;
+    setLegend(info);
     map.on("click", (e) => {
       const { lat, lng } = e.latlng;
       setMarker((mar) => {
@@ -52,16 +53,14 @@ const MyMarkers = ({ map }) => {
     });
   }, [map]);
 
-  //   return marker.length > 0 && legend !== undefined ? (
-  return (
+  return marker.length > 0 && legend !== undefined ? (
     <ShowMarkers
       mapContainer={map}
       legend={legend}
       markers={marker}
       setLegend={setLegend}
     />
-  );
-  //   ) : null;
+  ) : null;
 };
 
 export default MyMarkers;
