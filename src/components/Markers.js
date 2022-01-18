@@ -51,7 +51,7 @@ const MyMarkers = ({ map }) => {
       info.textContent = `new marker: ${e.latlng}`;
       setLegend(info);
     });
-  }, [map]);
+  }, [map, dispatch]);
 
   return marker.length > 0 && legend !== undefined ? (
     <ShowMarkers

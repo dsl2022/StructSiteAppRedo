@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { MapContainer } from "react-leaflet";
-import L from "leaflet";
 import MyMarkers from "./components/Markers";
 import { CRS } from "leaflet";
 
